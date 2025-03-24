@@ -13,8 +13,12 @@ pub fn xtf2vtf<P: AsRef<Path>>(input:P,output:P){
     let mut mipsize: u8 = 0;
     let mut newmip = crate::mip_helper::Mip { resolution: (0,0), img_data: (None) };
     for a in &mut newmips{
-        newmip = a.level[3].clone();
-        println!("{:?}",a.level[3].resolution);
+        if a.level.len() > 3 {
+            newmip = a.level[3].clone();
+            println!("{:?}", a.level[3].resolution);
+        } else {
+            println!("Warning: a.level has only {} elements, skipping index 3", a.level.len());
+        }
         a.reverse();
         mipsize = a.level.len() as u8;
         
